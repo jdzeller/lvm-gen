@@ -23,7 +23,11 @@ def create_lv(lv, gb, vg):
             print('lvcreate -L ' + str(gbs[i]) + 'G -n ' + lvs[i] + 'lv ' + vg + 'vg')
         else:
             print('lvcreate -l +100%FREE -n ' + lvs[i] + 'lv ' + vg + 'vg')
+
+def mk_fs(vg):
+    print('for i in /dev/' + vg + 'vg/*; do mkfs.ext4 -m $i; done')
             
 create_pv(args.pv)
 create_vg(args.vg, args.pv)
 create_lv(args.lv, args.gb, args.vg)
+mk_fs(args.vg)
